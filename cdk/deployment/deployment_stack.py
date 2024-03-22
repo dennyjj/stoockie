@@ -1,19 +1,25 @@
 from aws_cdk import (
-    # Duration,
     Stack,
-    # aws_sqs as sqs,
+    aws_lambda,
+    aws_events,
+    aws_events_targets
 )
 from constructs import Construct
 
-class DeploymentStack(Stack):
 
+class DeploymentStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # The code that defines your stack goes here
+        lambda_ = aws_lambda.DockerImageFunction(
+            self, "Stoockie",
+            architecture=aws_lambda.Architecture.X86_64,
+            code=aws_lambda.DockerImageCode.from_image_asset("../package")
+        )
 
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "DeploymentQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
+        rule = aws_events.Rule(
+            self, "StoockieRule",
+            schedule=aws_events.Schedule.cron(minute="0", hour="7"),
+        )
+
+        rule.add_target(aws_events_targets.LambdaFunction(lambda_))
