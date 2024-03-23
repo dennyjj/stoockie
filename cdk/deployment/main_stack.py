@@ -7,7 +7,7 @@ from aws_cdk import (
 from constructs import Construct
 
 
-class DeploymentStack(Stack):
+class MainStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -19,7 +19,7 @@ class DeploymentStack(Stack):
 
         rule = aws_events.Rule(
             self, "StoockieRule",
-            schedule=aws_events.Schedule.cron(minute="0", hour="7"),
+            schedule=aws_events.Schedule.cron(minute="0", hour="23"),
         )
 
         rule.add_target(aws_events_targets.LambdaFunction(lambda_))
