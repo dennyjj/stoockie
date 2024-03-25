@@ -2,10 +2,6 @@ on:
   push:
     branches: ['master']
 
-env:
-  CDK_ACCOUNT: ${{ vars.CDK_ACCOUNT }}
-  CDK_REGION: ${{ vars.CDK_REGION }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
