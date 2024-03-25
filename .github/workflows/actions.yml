@@ -2,6 +2,10 @@ on:
   push:
     branches: ['master']
 
+env:
+  CDK_ACCOUNT: ${{ vars.CDK_ACCOUNT }}
+  CDK_REGION: ${{ vars.CDK_REGION }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -24,10 +28,9 @@ jobs:
         run: npm install -g aws-cdk
 
       - name: Install Dependencies
-        env:
-          CDK_ACCOUNT: ${{ vars.CDK_ACCOUNT }}
-          CDK_REGION: ${{ vars.CDK_REGION }}
         run: |
+          echo "variable from shell environment : $CDK_ACCOUNT"
+          echo "variable from shell environment : $CDK_REGION"
           python -m pip install --upgrade pip
           pip install -r cdk/requirements.txt
 
