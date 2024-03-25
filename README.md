@@ -1,1 +1,1 @@
-just a lazy mf creating an lambda to get the last stock price through telegram every day
+just a lazy mf cronjob to get the stock price through telegram bot every day

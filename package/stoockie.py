@@ -13,6 +13,7 @@ def handler(event, context):
 
         tickers = [get_ticker(ticker) for ticker in config['tickers']]
         message = compose_telegram_message(tickers)
+        print(message)
 
         url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
         requests.get(url).json()
