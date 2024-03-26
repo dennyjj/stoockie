@@ -21,7 +21,8 @@ class MainStack(Stack):
 
         rule = aws_events.Rule(
             self, "StoockieRule",
-            schedule=aws_events.Schedule.cron(minute="0", hour="23", week_day="TUE-SAT"),
+            # Run at 07:00 UTC+8 every Monday to Friday
+            schedule=aws_events.Schedule.cron(minute="0", hour="23", week_day="SUN-THU"),
         )
 
         rule.add_target(aws_events_targets.LambdaFunction(lambda_))
