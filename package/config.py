@@ -15,7 +15,7 @@ def get_config():
         raise ValueError("missing config TICKERS")
 
     return {
-        'token': token,
-        'chat_id': chat_id,
-        'tickers': tickers.split(","),
+        "token": token,
+        "chat_id": chat_id,
+        "tickers": tickers.split(","),
     }

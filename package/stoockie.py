@@ -1,5 +1,6 @@
 import requests
 import yfinance as yf
+from tabulate import tabulate
 
 from config import get_config
 
@@ -8,10 +9,12 @@ def handler(event, context):
     try:
         config = get_config()
 
-        token = config['token']
-        chat_id = config['chat_id']
+        token = config["token"]
+        chat_id = config["chat_id"]
 
-        tickers = [get_ticker(ticker) for ticker in config['tickers']]
+        tickers = [get_ticker(ticker) for ticker in config["tickers"]]
+        tickerr = tickers[0]
+        tickerr.fast_info.day_low
         message = compose_telegram_message(tickers)
         print(message)
 
@@ -27,12 +30,22 @@ def get_ticker(symbol):
 
 
 def compose_telegram_message(tickers):
-    return "\n".join([compose_last_price_message(ticker) for ticker in tickers])
+    header = ["Stock", "Price", "DH", "DL"]
+    table = [header] + [compose_stock_message(ticker) for ticker in tickers]
+    return tabulate(table, headers="firstrow", tablefmt="jira", numalign="left")
 
 
-def compose_last_price_message(ticker):
-    return (ticker.ticker + " Last Price: " +
-            num_to_str(ticker.basic_info['lastPrice']))
+def compose_stock_message(ticker):
+    last_price = ticker.basic_info["lastPrice"]
+    day_high = ticker.fast_info.day_high
+    day_low = ticker.fast_info.day_low
+
+    return [
+        ticker.ticker,
+        num_to_str(last_price),
+        num_to_str(day_high),
+        num_to_str(day_low),
+    ]
 
 
 def num_to_str(num):
