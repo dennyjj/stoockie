@@ -13,8 +13,6 @@ def handler(event, context):
         chat_id = config["chat_id"]
 
         tickers = [get_ticker(ticker) for ticker in config["tickers"]]
-        tickerr = tickers[0]
-        tickerr.fast_info.day_low
         message = compose_telegram_message(tickers)
         print(message)
 
