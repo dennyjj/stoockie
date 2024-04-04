@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import requests
 import yfinance as yf
 from tabulate import tabulate
@@ -13,9 +14,11 @@ def handler(event, context):
         chat_id = config["chat_id"]
 
         tickers = [get_ticker(ticker) for ticker in config["tickers"]]
-        message = compose_telegram_message(tickers)
-        print(message)
-        #TODO: Add datetime
+        table = compose_stock_info_table(tickers)
+        dt = datetime.now(timezone.utc)
+
+        message = dt.strftime(
+            '%Y-%m-%d %A') + "\n" + table
 
         url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
         requests.get(url).json()
@@ -30,13 +33,13 @@ def get_ticker(symbol):
     return yf.Ticker(symbol)
 
 
-def compose_telegram_message(tickers):
+def compose_stock_info_table(tickers):
     header = ["Stock", "Price", "DH", "DL"]
-    table = [header] + [compose_stock_message(ticker) for ticker in tickers]
+    table = [header] + [compose_stock_info(ticker) for ticker in tickers]
     return tabulate(table, headers="firstrow", tablefmt="jira", numalign="left")
 
 
-def compose_stock_message(ticker):
+def compose_stock_info(ticker):
     last_price = ticker.basic_info["lastPrice"]
     day_high = ticker.fast_info.day_high
     day_low = ticker.fast_info.day_low
