@@ -19,6 +19,7 @@ def handler(event, context):
 
         message = dt.strftime(
             '%Y-%m-%d %A') + "\n" + table
+        print(message)
 
         url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
         requests.get(url).json()
