@@ -1,8 +1,8 @@
-from datetime import datetime, timezone
+import re
 import requests
 import yfinance as yf
 from tabulate import tabulate
-
+from datetime import datetime, timezone
 from config import get_config
 
 
@@ -46,7 +46,7 @@ def compose_stock_info(ticker):
     day_low = ticker.fast_info.day_low
 
     return [
-        ticker.ticker,
+        re.sub('[^A-Za-z]', '', ticker.ticker),
         num_to_str(last_price),
         num_to_str(day_high),
         num_to_str(day_low),
