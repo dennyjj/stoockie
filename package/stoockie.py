@@ -5,6 +5,8 @@ from tabulate import tabulate
 from datetime import datetime, timezone
 from config import get_config
 
+telegram_base_url = "https://api.telegram.org"
+
 
 def handler(event, context):
     try:
@@ -17,16 +19,15 @@ def handler(event, context):
         table = compose_stock_info_table(tickers)
         dt = datetime.now(timezone.utc)
 
-        message = dt.strftime(
-            '%Y-%m-%d %A') + "\n" + table
+        message = dt.strftime('%Y-%m-%d %A') + "\n" + table
         print(message)
 
-        url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
+        url = f"{telegram_base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
         requests.get(url).json()
 
     except Exception as e:
         print(e)
-        url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={e}"
+        url = f"{telegram_base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={e}"
         requests.get(url).json()
 
 

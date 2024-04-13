@@ -17,5 +17,5 @@ def get_config():
     return {
         "token": token,
         "chat_id": chat_id,
-        "tickers": tickers.split(","),
+        "tickers": list(set(tickers.split(","))),
     }
