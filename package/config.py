@@ -2,6 +2,8 @@ import os
 
 
 def get_config():
+    telegram_base_url = "https://api.telegram.org"
+    
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     if token is None:
         raise ValueError("missing config TELEGRAM_BOT_TOKEN")
@@ -15,6 +17,7 @@ def get_config():
         raise ValueError("missing config TICKERS")
 
     return {
+        "telegram_base_url": telegram_base_url,
         "token": token,
         "chat_id": chat_id,
         "tickers": list(set(tickers.split(","))),

@@ -5,13 +5,12 @@ from tabulate import tabulate
 from datetime import datetime, timezone
 from config import get_config
 
-telegram_base_url = "https://api.telegram.org"
-
 
 def handler(event, context):
     try:
         config = get_config()
 
+        telegram_base_url = config["telegram_base_url"]
         token = config["token"]
         chat_id = config["chat_id"]
 
