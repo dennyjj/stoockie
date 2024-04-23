@@ -14,7 +14,8 @@ def handler(event, context):
         token = config["token"]
         chat_id = config["chat_id"]
 
-        tickers = [get_ticker(ticker) for ticker in config["tickers"]]
+        tickers = sorted([get_ticker(
+            ticker) for ticker in config["tickers"]], key=lambda ticker: ticker.ticker)
         table = compose_stock_info_table(tickers)
         dt = datetime.now(timezone.utc)
 
@@ -46,7 +47,7 @@ def compose_stock_info(ticker):
     day_low = ticker.fast_info.day_low
 
     return [
-        re.sub('[^A-Za-z]', '', ticker.ticker),
+        ticker.ticker,
         num_to_str(last_price),
         num_to_str(day_high),
         num_to_str(day_low),
