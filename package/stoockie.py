@@ -1,4 +1,3 @@
-import re
 import requests
 import yfinance as yf
 from tabulate import tabulate
@@ -23,12 +22,10 @@ def handler(event, context):
         print(message)
 
         url = f"{telegram_base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
-        requests.get(url).json()
+        requests.post(url)
 
     except Exception as e:
         print(e)
-        url = f"{telegram_base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={e}"
-        requests.get(url).json()
 
 
 def get_ticker(symbol):
