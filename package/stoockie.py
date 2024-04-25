@@ -26,6 +26,7 @@ def handler(event, context):
 
     except Exception as e:
         print(e)
+        return e
 
 
 def get_ticker(symbol):
