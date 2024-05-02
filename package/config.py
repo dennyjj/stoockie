@@ -1,7 +1,7 @@
 import os
 
 
-def get_config():
+def get_config() -> dict:
     telegram_base_url = "https://api.telegram.org"
     
     token = os.getenv("TELEGRAM_BOT_TOKEN")

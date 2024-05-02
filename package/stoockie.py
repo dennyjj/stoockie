@@ -13,12 +13,14 @@ def handler(event, context):
         token = config["token"]
         chat_id = config["chat_id"]
 
-        tickers = sorted([get_ticker(
-            ticker) for ticker in config["tickers"]], key=lambda ticker: ticker.ticker)
+        tickers = sorted(
+            [get_ticker(ticker) for ticker in config["tickers"]],
+            key=lambda ticker: ticker.ticker,
+        )
         table = compose_stock_info_table(tickers)
         dt = datetime.now(timezone.utc)
 
-        message = dt.strftime('%Y-%m-%d %A') + "\n" + table
+        message = dt.strftime("%Y-%m-%d %A") + "\n" + table
         print(message)
 
         url = f"{telegram_base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
@@ -29,17 +31,17 @@ def handler(event, context):
         return e
 
 
-def get_ticker(symbol):
+def get_ticker(symbol: str) -> yf.Ticker:
     return yf.Ticker(symbol)
 
 
-def compose_stock_info_table(tickers):
+def compose_stock_info_table(tickers: list[yf.Ticker]) -> str:
     header = ["Stock", "Price", "DH", "DL"]
     table = [header] + [compose_stock_info(ticker) for ticker in tickers]
     return tabulate(table, headers="firstrow", tablefmt="jira", numalign="left")
 
 
-def compose_stock_info(ticker):
+def compose_stock_info(ticker: yf.Ticker) -> list[str]:
     last_price = ticker.basic_info["lastPrice"]
     day_high = ticker.fast_info.day_high
     day_low = ticker.fast_info.day_low
@@ -52,5 +54,5 @@ def compose_stock_info(ticker):
     ]
 
 
-def num_to_str(num):
+def num_to_str(num: float) -> str:
     return str(round(num, 2))
