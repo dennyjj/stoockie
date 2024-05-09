@@ -8,7 +8,6 @@ from config import get_config
 def handler(event, context):
     try:
         config = get_config()
-
         telegram_base_url = config["telegram_base_url"]
         token = config["token"]
         chat_id = config["chat_id"]
@@ -21,10 +20,10 @@ def handler(event, context):
         dt = datetime.now(timezone.utc)
 
         message = dt.strftime("%Y-%m-%d %A") + "\n" + table
-        print(message)
-
         url = f"{telegram_base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
+        
         requests.post(url)
+        print(message)
 
     except Exception as e:
         print(e)
