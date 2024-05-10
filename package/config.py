@@ -1,9 +1,9 @@
 import os
 
 
-def get_config() -> dict:
+def get_config() -> dict[str, str | list[str]]:
     telegram_base_url = "https://api.telegram.org"
-    
+
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     if token is None:
         raise ValueError("missing config TELEGRAM_BOT_TOKEN")

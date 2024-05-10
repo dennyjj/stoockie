@@ -20,9 +20,9 @@ def handler(event, context):
         dt = datetime.now(timezone.utc)
 
         message = dt.strftime("%Y-%m-%d %A") + "\n" + table
-        url = f"{telegram_base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
-        
-        requests.post(url)
+        request_url = f"{telegram_base_url}/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
+
+        requests.post(request_url)
         print(message)
 
     except Exception as e:
