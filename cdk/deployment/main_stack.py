@@ -15,7 +15,7 @@ class MainStack(Stack):
         lambda_ = aws_lambda.DockerImageFunction(
             self, "Stoockie",
             architecture=aws_lambda.Architecture.X86_64,
-            timeout=Duration.seconds(10),
+            timeout=Duration.seconds(20),
             code=aws_lambda.DockerImageCode.from_image_asset("../package")
         )
 
