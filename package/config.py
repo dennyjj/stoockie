@@ -7,15 +7,15 @@ def get_config() -> Dict[str, Union[str, List[str]]]:
 
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     if token is None:
-        raise ValueError("missing config TELEGRAM_BOT_TOKEN")
+        raise ValueError("Missing config TELEGRAM_BOT_TOKEN")
 
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
     if chat_id is None:
-        raise ValueError("missing config TELEGRAM_CHAT_ID")
+        raise ValueError("Missing config TELEGRAM_CHAT_ID")
 
     tickers = os.getenv("TICKERS")
     if tickers is None:
-        raise ValueError("missing config TICKERS")
+        raise ValueError("Missing config TICKERS")
 
     return {
         "telegram_base_url": telegram_base_url,
