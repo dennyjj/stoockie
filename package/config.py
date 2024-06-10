@@ -1,8 +1,8 @@
 import os
-from typing import Dict, List, Union
+from typing import Dict
 
 
-def get_config() -> Dict[str, Union[str, List[str]]]:
+def get_config() -> Dict[str, str]:
     telegram_base_url = "https://api.telegram.org"
 
     token = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -21,5 +21,5 @@ def get_config() -> Dict[str, Union[str, List[str]]]:
         "telegram_base_url": telegram_base_url,
         "token": token,
         "chat_id": chat_id,
-        "tickers": list(set(tickers.split(","))),
+        "tickers": tickers,
     }

@@ -11,9 +11,11 @@ def handler(event, context):
         telegram_base_url = config["telegram_base_url"]
         token = config["token"]
         chat_id = config["chat_id"]
+        tickers = config["tickers"]
 
         tickers = sorted(
-            [get_ticker(ticker) for ticker in config["tickers"]],
+            [get_ticker(ticker)
+             for ticker in list(set(tickers.split(",")))],
             key=lambda ticker: ticker.ticker,
         )
         table = compose_stock_info_table(tickers)
