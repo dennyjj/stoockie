@@ -1,7 +1,11 @@
 .PHONY: install deploy
 
+
+BASE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+
+
 install:
-	@pip install -r requirements.txt
+	@cd $(BASE_DIR)/package && pip install -r requirements.txt
 
 deploy:
-	@cd cdk && cdk deploy --require-approval never
+	@cd $(BASE_DIR)/cdk && cdk deploy --require-approval never
