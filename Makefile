@@ -4,4 +4,4 @@ install:
 	@pip install -r requirements.txt
 
 deploy:
-	@cdk deploy --require-approval never
+	@cd cdk && cdk deploy --require-approval never
