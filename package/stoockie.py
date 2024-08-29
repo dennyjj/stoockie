@@ -14,8 +14,7 @@ def handler(event, context):
         tickers = config["tickers"]
 
         tickers = sorted(
-            [get_ticker(ticker)
-             for ticker in list(set(tickers.split(",")))],
+            [get_ticker(ticker) for ticker in list(set(tickers.split(",")))],
             key=lambda ticker: ticker.ticker,
         )
         table = compose_stock_info_table(tickers)
